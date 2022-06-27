@@ -51,15 +51,21 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+grpc-client image name
 */}}
-{{- define "grpc-client.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "grpc-client.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
+{{- define "grpc-client.imagename" -}}
+{{- if .Values.global.image.registry -}}
+{{- printf "%s/" .Values.global.image.registry -}}
+{{- else if .Values.image.registry -}}
+{{- printf "%s/" .Values.image.registry -}}
+{{- end -}}
+{{- printf "%s:" .Values.image.repository -}}
+{{- if .Values.global.image.tag -}}
+{{- .Values.global.image.tag -}}
+{{- else -}}
+{{- tpl .Values.image.tag . -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 grpc-client consensus image name
