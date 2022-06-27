@@ -1,0 +1,28 @@
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+annotations: {}
+
+image:
+  repository: main-service
+  tag: v0.0.1
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+resources:
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+
+service:
+  type: ClusterIP
+
+ports:
+  http: 8080
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

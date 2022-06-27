@@ -1,0 +1,14 @@
+apiVersion: v2
+name: storage-service
+kubeVersion: ">=1.17.0"
+type: application
+version: 0.0.1
+appVersion: v0.0.1
+description: ONOS Storage Service
+keywords:
+  - onos
+  - sdn
+home: https://onosproject.org
+maintainers:
+  - name: ONOS Support
+    email: support@opennetworking.org
