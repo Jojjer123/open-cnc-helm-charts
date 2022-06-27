@@ -1,4 +1,5 @@
 global:
+  name: ""
   image:
     registry: ""
     tag: ""
@@ -8,11 +9,6 @@ global:
       image:
         registry: ""
         tag: ""
-  openpolicyagent:
-    enabled: false
-    image:
-      registry: ""
-      tag: ""
 
 nameOverride: "grpc-client"
 fullnameOverride: "grpc-client"
