@@ -1,9 +1,15 @@
 dependencies:
+- name: main-service
+  repository: file://../main-service
+  version: 0.0.1
+- name: tsn-service
+  repository: file://../tsn-service
+  version: 0.0.1
 - name: monitor-service
   repository: file://../monitor-service
   version: 0.0.0
 - name: grpc-client
   repository: file://../grpc-client
   version: 0.0.0
-digest: sha256:9101ae337c1ffc678a4d60cac9fa3d87b71c9616dc90b47182eae2c78d064ce9
-generated: "2022-06-27T20:10:04.221667+02:00"
+digest: sha256:fdfb724d3ade454eeefe23a6d0a8c0606bce5e858e668283face9786836edd12
+generated: "2022-06-28T20:12:50.6292683+02:00"

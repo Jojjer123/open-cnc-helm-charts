@@ -8,6 +8,14 @@ appVersion: v1.1.0
 maintainers:
   - name: Fredrik Hallström
 dependencies:
+  - name: main-service
+    condition: import.main-service.enabled
+    repository: file://../main-service
+    version: 0.0.1
+  - name: tsn-service
+    condition: import.tsn-service.enabled
+    repository: file://../tsn-service
+    version: 0.0.1
   - name: monitor-service
     condition: import.monitor-service.enabled
     repository: file://../monitor-service

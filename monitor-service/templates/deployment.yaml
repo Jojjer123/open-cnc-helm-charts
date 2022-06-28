@@ -11,7 +11,7 @@ spec:
     matchLabels:
       name: {{ template "monitor-service.fullname" . }}
       app: onos
-      type: grpc
+      type: monitor
       resource: {{ template "monitor-service.fullname" . }}
       {{- include "monitor-service.selectorLabels" . | nindent 6 }}
   template:
@@ -20,7 +20,7 @@ spec:
         name: {{ template "monitor-service.fullname" . }}
         {{- include "monitor-service.selectorLabels" . | nindent 8 }}
         app: onos
-        type: grpc
+        type: monitor
         resource: {{ template "monitor-service.fullname" . }}
         {{- include "monitor-service.selectorLabels" . | nindent 8 }}
       annotations:
@@ -60,8 +60,8 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
           ports:
-            {{- range $key, $port := .Values.ports.grpc }}
-            - name: grpc{{ $key }}
+            {{- range $key, $port := .Values.ports.gnmi }}
+            - name: gnmi{{ $key }}
               containerPort: {{ $port }}
             {{- end}}
           volumeMounts:

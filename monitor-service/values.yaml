@@ -30,7 +30,7 @@ tolerations: []
 affinity: {}
 
 global:
-  name: ""
+  name: "onos"
   image:
     registry: ""
     tag: ""
@@ -43,7 +43,7 @@ global:
 
 store:
   consensus:
-    enabled: true
+    enabled: false
     name: ""
     image:
       registry: ""
@@ -65,7 +65,7 @@ openpolicyagent:
     repository: openpolicyagent/opa
     registry: ""
     tag: 0.40.0
-  regoConfigMap: grpc-client-openpolicyagent
+  regoConfigMap: monitor-service-openpolicyagent
   loglevel: info
 
 openidc:

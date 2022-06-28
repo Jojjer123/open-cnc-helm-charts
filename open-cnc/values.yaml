@@ -37,10 +37,26 @@ store:
       storageSize: 1Gi
 
 import:
+  main-service:
+    enabled: true
+  tsn-service:
+    enabled: true
   monitor-service:
     enabled: true
   grpc-client:
     enabled: true
+
+# MAIN-SERVICE
+main-service:
+  store:
+    consensus:
+      enabled: false
+
+# TSN-SERVICE
+tsn-service:
+  store:
+    consensus:
+      enabled: false
 
 # MONITOR-SERVICE
 monitor-service:
