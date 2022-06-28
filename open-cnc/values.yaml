@@ -1,0 +1,55 @@
+global:
+  fullnameOverride: "open-cnc"
+  name: ""
+  store:
+    consensus:
+      enabled: true
+      name: ""
+      image:
+        registry: ""
+        repository: atomix/atomix-raft-storage-node
+        tag: ""
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      replicas: 1
+      partitions: 1
+      raft: {}
+      persistence:
+        storageClass: ""
+        storageSize: 1Gi
+
+store:
+  consensus:
+    enabled: false
+    name: ""
+    image:
+      registry: ""
+      repository: atomix/atomix-raft-storage-node
+      tag: ""
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    clusters: 1
+    replicas: 1
+    partitions: 1
+    raft: {}
+    persistence:
+      storageClass: ""
+      storageSize: 1Gi
+
+import:
+  monitor-service:
+    enabled: true
+  grpc-client:
+    enabled: true
+
+# MONITOR-SERVICE
+monitor-service:
+  store:
+    consensus:
+      enabled: false
+
+# GRPC-CLIENT
+grpc-client:
+  store:
+    consensus:
+      enabled: false

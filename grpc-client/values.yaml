@@ -1,5 +1,5 @@
 global:
-  name: ""
+  name: "onos"
   image:
     registry: ""
     tag: ""
@@ -28,7 +28,7 @@ resources:
 
 store:
   consensus:
-    enabled: true
+    enabled: false
     name: ""
     image:
       registry: ""

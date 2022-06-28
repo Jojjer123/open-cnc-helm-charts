@@ -9,22 +9,34 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
+      name: {{ template "monitor-service.fullname" . }}
+      app: onos
+      type: grpc
+      resource: {{ template "monitor-service.fullname" . }}
       {{- include "monitor-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         name: {{ template "monitor-service.fullname" . }}
         {{- include "monitor-service.selectorLabels" . | nindent 8 }}
+        app: onos
+        type: grpc
+        resource: {{ template "monitor-service.fullname" . }}
+        {{- include "monitor-service.selectorLabels" . | nindent 8 }}
+      annotations:
+        broker.atomix.io/inject: "true"
+        raft.storage.atomix.io/inject: "true"
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      serviceAccountName: {{ template "monitor-service.fullname" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "monitor-service.imagename" . | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POD_NAMESPACE
@@ -35,30 +47,48 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: SERVICE_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: OIDC_SERVER_URL
+              value: {{ .Values.openidc.issuer }}
+            - name: SERVICE_NAME
+              value: {{ template "monitor-service.fullname" . }}
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
           ports:
-            {{- range $key, $port := .Values.ports.gnmi }}
-            - name: gnmi{{ $key }}
+            {{- range $key, $port := .Values.ports.grpc }}
+            - name: grpc{{ $key }}
               containerPort: {{ $port }}
             {{- end}}
-          # readinessProbe:
-          #   tcpSocket:
-          #     port: {{ .Values.ports.gnmi.secure }}
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: {{ .Values.ports.gnmi.secure }}
-          #   initialDelaySeconds: 15
-          #   periodSeconds: 20
           volumeMounts:
             - name: config
-              mountPath: /etc/monitor-service/configs
+              mountPath: /etc/onos/config
               readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            {{- if .Values.debug }}
+            capabilities:
+              add:
+                - SYS_PTRACE
+            {{- end }}
       volumes:
         - name: config
           configMap:
             name: {{ template "monitor-service.fullname" . }}-config
+    {{- with .Values.nodeSelector }}
+    nodeSelector:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+    affinity:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+    tolerations:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}

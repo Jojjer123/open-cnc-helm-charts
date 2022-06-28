@@ -1,0 +1,18 @@
+apiVersion: v2
+name: open-cnc
+description: Helm chart deploying Open-CNC
+kubeVersion: ">=1.17.0"
+type: application
+version: 1.2.27
+appVersion: v1.1.0
+maintainers:
+  - name: Fredrik Hallström
+dependencies:
+  - name: monitor-service
+    condition: import.monitor-service.enabled
+    repository: file://../monitor-service
+    version: 0.0.0
+  - name: grpc-client
+    condition: import.grpc-client.enabled
+    repository: file://../grpc-client
+    version: 0.0.0

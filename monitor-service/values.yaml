@@ -1,5 +1,5 @@
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "monitor-service"
+fullnameOverride: "monitor-service"
 
 replicaCount: 1
 annotations: {}
@@ -28,3 +28,45 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+global:
+  name: ""
+  image:
+    registry: ""
+    tag: ""
+  store:
+    consensus:
+      name: ""
+      image:
+        registry: ""
+        tag: ""
+
+store:
+  consensus:
+    enabled: true
+    name: ""
+    image:
+      registry: ""
+      repository: atomix/atomix-raft-storage-node
+      tag: ""
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    clusters: 1
+    replicas: 1
+    partitions: 1
+    raft: {}
+    persistence:
+      storageClass: ""
+      storageSize: 1Gi
+
+openpolicyagent:
+  enabled: false
+  image:
+    repository: openpolicyagent/opa
+    registry: ""
+    tag: 0.40.0
+  regoConfigMap: grpc-client-openpolicyagent
+  loglevel: info
+
+openidc:
+  issuer:

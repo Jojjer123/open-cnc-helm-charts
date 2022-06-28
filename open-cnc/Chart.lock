@@ -1,0 +1,9 @@
+dependencies:
+- name: monitor-service
+  repository: file://../monitor-service
+  version: 0.0.0
+- name: grpc-client
+  repository: file://../grpc-client
+  version: 0.0.0
+digest: sha256:9101ae337c1ffc678a4d60cac9fa3d87b71c9616dc90b47182eae2c78d064ce9
+generated: "2022-06-27T20:10:04.221667+02:00"

@@ -1,12 +1,8 @@
-# SPDX-FileCopyrightText: 2022 2020-present Open Networking Foundation <info@opennetworking.org>
-#
-# SPDX-License-Identifier: Apache-2.0
-
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: {{ template "grpc-client.fullname" . }}
+  name: {{ template "monitor-service.fullname" . }}
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
@@ -14,7 +10,7 @@ rules:
   resources:
   - '*'
   resourceNames:
-  - {{ template "grpc-client.fullname" . }}-test
+  - {{ template "monitor-service.fullname" . }}-test
   - monitor-config
   verbs:
   - '*'
