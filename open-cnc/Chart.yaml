@@ -20,7 +20,19 @@ dependencies:
     condition: import.monitor-service.enabled
     repository: file://../monitor-service
     version: 0.0.0
-  - name: grpc-client
-    condition: import.grpc-client.enabled
-    repository: file://../grpc-client
-    version: 0.0.0
+  # - name: grpc-client
+  #   condition: import.grpc-client.enabled
+  #   repository: file://../grpc-client
+  #   version: 0.0.0
+  - name: onos-config
+    condition: import.onos-config.enabled
+    repository: file://../onos-config
+    version: 1.5.5
+  # - name: onos-config
+  #   condition: import.onos-config.enabled
+  #   repository: https://charts.onosproject.org
+  #   version: 1.5.5
+  - name: onos-topo
+    condition: import.onos-topo.enabled
+    repository: file://../onos-topo
+    version: 1.2.1

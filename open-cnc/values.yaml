@@ -45,6 +45,10 @@ import:
     enabled: true
   grpc-client:
     enabled: true
+  onos-config:
+    enabled: true
+  onos-topo:
+    enabled: true
 
 # MAIN-SERVICE
 main-service:
@@ -64,8 +68,20 @@ monitor-service:
     consensus:
       enabled: false
 
-# GRPC-CLIENT
-grpc-client:
+# # GRPC-CLIENT
+# grpc-client:
+#   store:
+#     consensus:
+#       enabled: false
+
+# ONOS-CONFIG
+onos-config:
+  store:
+    consensus:
+      enabled: false
+
+# ONOS-TOPO
+onos-topo:
   store:
     consensus:
       enabled: false

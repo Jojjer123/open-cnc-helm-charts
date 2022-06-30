@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: {{ template "main-service.fullname" . }}
+  name: {{ template "onos-topo.fullname" . }}
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
@@ -10,11 +10,6 @@ rules:
   resources:
   - '*'
   resourceNames:
-  - configurations
-  - resources
-  - streams
-  - topology
-  - metrics
-  - events
+  - {{ template "onos-topo.fullname" . }}-objects
   verbs:
   - '*'

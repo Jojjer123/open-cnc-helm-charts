@@ -8,8 +8,11 @@ dependencies:
 - name: monitor-service
   repository: file://../monitor-service
   version: 0.0.0
-- name: grpc-client
-  repository: file://../grpc-client
-  version: 0.0.0
-digest: sha256:fdfb724d3ade454eeefe23a6d0a8c0606bce5e858e668283face9786836edd12
-generated: "2022-06-28T20:12:50.6292683+02:00"
+- name: onos-config
+  repository: file://../onos-config
+  version: 1.5.5
+- name: onos-topo
+  repository: file://../onos-topo
+  version: 1.2.1
+digest: sha256:f4297090c8a0b759dd63e89228b07893d1cb765073ae04ab9edc74a32d324d63
+generated: "2022-06-30T11:16:37.2210038+02:00"
