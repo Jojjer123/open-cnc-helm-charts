@@ -6,6 +6,6 @@ version: 0.0.1
 appVersion: v0.0.1
 description: TSN manager.
 home:
-tsntainers:
+maintainers:
   - name: Fredrik Hallström
     email:

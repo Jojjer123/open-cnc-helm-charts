@@ -13,7 +13,5 @@ spec:
   selector:
     name: {{ template "tsn-service.fullname" . }}
   ports:
-    {{- range $key, $port := .Values.ports.gnmi }}
-    - name: gnmi{{ $key }}
-      port: {{ $port }}
-    {{- end}}
+    - name: grpc
+      port: 5000

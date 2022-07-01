@@ -60,10 +60,8 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
           ports:
-            {{- range $key, $port := .Values.ports.gnmi }}
-            - name: gnmi{{ $key }}
-              containerPort: {{ $port }}
-            {{- end}}
+            - name: grpc
+              containerPort: 5000
           volumeMounts:
             - name: config
               mountPath: /etc/onos/config

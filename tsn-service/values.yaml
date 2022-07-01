@@ -19,9 +19,8 @@ service:
   type: ClusterIP
 
 ports:
-  gnmi:
-    secure: 10161
-    insecure: 11161
+  grpc:
+    insecure: 5000
 
 nodeSelector: {}
 
