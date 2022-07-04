@@ -10,6 +10,7 @@ rules:
   resources:
   - '*'
   resourceNames:
-  - monitor-config
+  - configurations
+  - streams
   verbs:
   - '*'
