@@ -68,3 +68,6 @@ openpolicyagent:
 
 openidc:
   issuer:
+  admingroups:
+    - AetherROCAdmin
+    - EnterpriseAdmin

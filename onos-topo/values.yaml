@@ -24,7 +24,7 @@ image:
   pullSecrets: []
 
 imagePullSecrets: []
-nameOverride: ""
+nameOverride: "onos-topo"
 fullnameOverride: "onos-topo"
 
 debug: false
