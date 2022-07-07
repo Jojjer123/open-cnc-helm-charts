@@ -10,5 +10,4 @@ maintainers:
 - email: support@opennetworking.org
   name: ONOS Support
 name: onos-topo
-type: application
 version: 1.2.1
