@@ -14,5 +14,8 @@ dependencies:
 - name: onos-topo
   repository: file://../onos-topo
   version: 1.2.1
-digest: sha256:f4297090c8a0b759dd63e89228b07893d1cb765073ae04ab9edc74a32d324d63
-generated: "2022-06-30T11:16:37.2210038+02:00"
+- name: gnmi-netconf-adapter
+  repository: file://../gnmi-netconf-adapter
+  version: 0.0.1
+digest: sha256:4781c0444b53d1074d9c7e9e873f063c3bcc8196993dcfc02d52e190e583d94e
+generated: "2022-07-11T10:05:15.3896848+02:00"

@@ -49,6 +49,8 @@ import:
     enabled: true
   onos-topo:
     enabled: true
+  gnmi-netconf-adapter:
+    enabled: true
 
 # MAIN-SERVICE
 main-service:
@@ -85,3 +87,9 @@ onos-topo:
   store:
     consensus:
       enabled: false
+
+# # GNMI-NETCONF-ADAPTER
+# gnmi-netconf-adapter:
+#   store:
+#     consensus:
+#       enabled: false
