@@ -16,13 +16,5 @@ rules:
   - topology
   - metrics
   - events
-  - onos-topo-objects
   verbs:
   - '*'
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - "get"
-  - "list"
