@@ -11,11 +11,14 @@ dependencies:
 - name: onos-config
   repository: file://../onos-config
   version: 1.5.5
+- name: tsn-yang
+  repository: file://../tsn-yang
+  version: 1.0.5
 - name: onos-topo
   repository: file://../onos-topo
   version: 1.2.1
 - name: gnmi-netconf-adapter
   repository: file://../gnmi-netconf-adapter
   version: 0.0.1
-digest: sha256:4781c0444b53d1074d9c7e9e873f063c3bcc8196993dcfc02d52e190e583d94e
-generated: "2022-07-11T10:05:15.3896848+02:00"
+digest: sha256:bd17c6e3b559a63743112ed516e7d34b0dbcd9d575e496d2bfb4684b004da9d4
+generated: "2022-07-12T06:58:46.870272+02:00"

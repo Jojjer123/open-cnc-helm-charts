@@ -47,6 +47,8 @@ import:
     enabled: true
   onos-config:
     enabled: true
+  tsn-yang:
+    enabled: true
   onos-topo:
     enabled: true
   gnmi-netconf-adapter:
@@ -81,6 +83,10 @@ onos-config:
   store:
     consensus:
       enabled: false
+  models:
+    tsn-yang:
+      v1:
+        enabled: true
 
 # ONOS-TOPO
 onos-topo:
