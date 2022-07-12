@@ -47,7 +47,6 @@ module sysrepo-notification-store {
           (in hundredths of a second since the Unix epoch, modulo 2^32).";
       }
 
-      anydata data;
     }
   }
 }

@@ -364,16 +364,6 @@
      }
 
      /*
-      * Notifications
-      */
-
-     notification yang-library-update {
-       description
-         "Generated when any YANG library information on the
-          server has changed.";
-     }
-
-     /*
       * Legacy groupings
       */
 
@@ -549,28 +539,6 @@
 
        uses module-list {
          status deprecated;
-       }
-     }
-
-     /*
-      * Legacy notifications
-      */
-
-     notification yang-library-change {
-       status deprecated;
-       description
-         "Generated when the set of modules and submodules supported
-          by the server has changed.";
-       leaf module-set-id {
-         type leafref {
-           path "/yanglib:modules-state/yanglib:module-set-id";
-         }
-         mandatory true;
-         status deprecated;
-         description
-           "Contains the module-set-id value representing the
-            set of modules and submodules supported at the server
-            at the time the notification is generated.";
        }
      }
 

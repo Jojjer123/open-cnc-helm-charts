@@ -434,7 +434,6 @@ module ietf-netconf-acm {
             type matchall-string-type;
             type access-operations-type;
           }
-          default "*";
           description
             "Access operations associated with this rule.
 

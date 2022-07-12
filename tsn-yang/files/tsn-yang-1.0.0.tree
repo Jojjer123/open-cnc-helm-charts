@@ -11,7 +11,7 @@ module: ieee8021-mstp
      |     +--ro ieee8021MstpCistBridgePriority?           int32
      +--rw ieee8021MstpTable
      |  +--rw ieee8021MstpEntry* [ieee8021MstpComponentId ieee8021MstpId]
-     |     +--rw ieee8021MstpComponentId                IEEE8021PbbComponentIdentifier   
+     |     +--rw ieee8021MstpComponentId                IEEE8021PbbComponentIdentifier
      |     +--rw ieee8021MstpId                         IEEE8021MstIdentifier
      |     +--ro ieee8021MstpBridgeId?                  BridgeId
      |     +--ro ieee8021MstpTimeSinceTopologyChange?   yang:timeticks
@@ -136,17 +136,10 @@ module: ieee802-dot1ab-lldp
            |  +--ro tlv-type    uint32
            |  +--ro tlv-info?   binary
            +--ro remote-org-defined-info* [info-identifier info-subtype info-index]
-              +--ro info-identifier    binary
+              +--ro info-identifier    uint32
               +--ro info-subtype       uint32
               +--ro info-index         uint32
               +--ro remote-info?       binary
-
-  notifications:
-    +---n remote-table-change
-       +--ro remote-insert?    -> /lldp/remote-statistics/remote-inserts
-       +--ro remote-delete?    -> /lldp/remote-statistics/remote-deletes
-       +--ro remote-drops?     -> /lldp/remote-statistics/remote-drops
-       +--ro remote-ageouts?   -> /lldp/remote-statistics/remote-ageouts
 
 module: ieee802-dot1q-bridge
   +--rw bridges
@@ -379,6 +372,33 @@ module: ieee802-dot1q-bridge
                  +--rw dot1CB:input-split-list*    tsn-stream-id-handle-type
                  +--rw dot1CB:output-split-list*   tsn-stream-id-handle-type
 
+module: ieee802-dot1q-fqtss
+  +--rw ieee802-dot1q-fqtss
+     +--rw ieee8021FqtssBapTable
+     |  +--rw ieee8021FqtssBapEntry* [ieee8021BridgeBaseComponentId ieee8021BridgeBasePort ieee8021FqtssBAPTrafficClass]
+     |     +--rw ieee8021BridgeBaseComponentId    uint32
+     |     +--rw ieee8021BridgeBasePort           string
+     |     +--rw ieee8021FqtssBAPTrafficClass     fqtss:IEEE8021FqtssTrafficClassValue
+     |     +--rw ieee8021FqtssDeltaBandwidth?     fqtss:IEEE8021FqtssDeltaBandwidthValue
+     |     +--ro ieee8021FqtssOperIdleSlopeMs?    uint32
+     |     +--ro ieee8021FqtssOperIdleSlopeLs?    uint32
+     |     +--rw ieee8021FqtssAdminIdleSlopeMs?   uint32
+     |     +--rw ieee8021FqtssAdminIdleSlopeLs?   uint32
+     |     +--rw ieee8021FqtssBapRowStatus?       snmpv2-tc:RowStatus
+     +--rw ieee8021FqtssTxSelectionAlgorithmTable
+     |  +--rw ieee8021FqtssTxSelectionAlgorithmEntry* [ieee8021BridgeBaseComponentId ieee8021BridgeBasePort ieee8021FqtssTrafficClass]
+     |     +--rw ieee8021BridgeBaseComponentId          uint32
+     |     +--rw ieee8021BridgeBasePort                 string
+     |     +--rw ieee8021FqtssTrafficClass              fqtss:IEEE8021FqtssTrafficClassValue
+     |     +--rw ieee8021FqtssTxSelectionAlgorithmID?   fqtss:IEEE8021FqtssTxSelectionAlgorithmIDValue
+     +--rw ieee8021FqtssSrpRegenOverrideTable
+        +--rw ieee8021FqtssSrpRegenOverrideEntry* [ieee8021BridgeBaseComponentId ieee8021BridgeBasePort ieee8021FqtssSrClassPriority]
+           +--rw ieee8021BridgeBaseComponentId         uint32
+           +--rw ieee8021BridgeBasePort                string
+           +--rw ieee8021FqtssSrClassPriority          uint32
+           +--rw ieee8021FqtssPriorityRegenOverride?   uint32
+           +--ro ieee8021FqtssSrpBoundaryPort?         boolean
+
 module: ietf-interfaces
   +--rw interfaces
   |  +--rw interface* [name]
@@ -528,6 +548,23 @@ module: ietf-interfaces
   |     |  +--ro preempt:release-advance?                 uint32
   |     |  +--ro preempt:preemption-active?               boolean
   |     |  +--ro preempt:hold-request?                    enumeration
+  |     +--rw preempt1:mac-merge {mac-merge}?
+  |     |  +--rw preempt1:admin-control
+  |     |  |  +--rw preempt1:merge-enable-tx?     enumeration
+  |     |  |  +--rw preempt1:verify-disable-tx?   enumeration
+  |     |  |  +--rw preempt1:verify-time?         uint16
+  |     |  |  +--rw preempt1:frag-size?           uint16
+  |     |  +--ro preempt1:admin-status
+  |     |  |  +--ro preempt1:merge-support?   enumeration
+  |     |  |  +--ro preempt1:verify-status?   enumeration
+  |     |  |  +--ro preempt1:status-tx?       enumeration
+  |     |  +--ro preempt1:statistics
+  |     |     +--ro preempt1:assembly-error-count?   yang:counter64
+  |     |     +--ro preempt1:smd-error-count?        yang:counter64
+  |     |     +--ro preempt1:assembly-ok-count?      yang:counter64
+  |     |     +--ro preempt1:fragment-count-rx?      yang:counter64
+  |     |     +--ro preempt1:fragment-count-tx?      yang:counter64
+  |     |     +--ro preempt1:hold-count?             yang:counter64
   |     +--rw sched:max-sdu-table* [traffic-class] {scheduled-traffic}?
   |     |  +--rw sched:traffic-class           dot1q-types:traffic-class-type
   |     |  +--rw sched:queue-max-sdu?          uint32
@@ -718,10 +755,191 @@ module: ietf-keystore
                  +--:(cleartext-password)
                     +--rw cleartext-password?    string
 
-  notifications:
-    +---n certificate-expiration
-       +--ro certificate        instance-identifier
-       +--ro expiration-date    yang:date-and-time
+module: ietf-netconf-acm
+  +--rw nacm
+     +--rw enable-nacm?              boolean
+     +--rw read-default?             action-type
+     +--rw write-default?            action-type
+     +--rw exec-default?             action-type
+     +--rw enable-external-groups?   boolean
+     +--ro denied-operations         yang:zero-based-counter32
+     +--ro denied-data-writes        yang:zero-based-counter32
+     +--ro denied-notifications      yang:zero-based-counter32
+     +--rw groups
+     |  +--rw group* [name]
+     |     +--rw name         group-name-type
+     |     +--rw user-name*   user-name-type
+     +--rw rule-list* [name]
+        +--rw name     string
+        +--rw group*   union
+        +--rw rule* [name]
+           +--rw name                       string
+           +--rw module-name?               union
+           +--rw (rule-type)?
+           |  +--:(protocol-operation)
+           |  |  +--rw rpc-name?            union
+           |  +--:(notification)
+           |  |  +--rw notification-name?   union
+           |  +--:(data-node)
+           |     +--rw path                 node-instance-identifier
+           +--rw access-operations?         union
+           +--rw action                     action-type
+           +--rw comment?                   string
+
+module: ietf-netconf-monitoring
+  +--ro netconf-state
+     +--ro capabilities
+     |  +--ro capability*   inet:uri
+     +--ro datastores
+     |  +--ro datastore* [name]
+     |     +--ro name     netconf-datastore-type
+     |     +--ro locks!
+     |        +--ro (lock-type)?
+     |           +--:(global-lock)
+     |           |  +--ro global-lock
+     |           |     +--ro locked-by-session    uint32
+     |           |     +--ro locked-time          yang:date-and-time
+     |           +--:(partial-lock)
+     |              +--ro partial-lock* [lock-id]
+     |                 +--ro lock-id              uint32
+     |                 +--ro locked-by-session    uint32
+     |                 +--ro locked-time          yang:date-and-time
+     |                 +--ro select*              yang:xpath1.0
+     |                 +--ro locked-node*         instance-identifier
+     +--ro schemas
+     |  +--ro schema* [identifier version format]
+     |     +--ro identifier    string
+     |     +--ro version       string
+     |     +--ro format        identityref
+     |     +--ro namespace     inet:uri
+     |     +--ro location*     union
+     +--ro sessions
+     |  +--ro session* [session-id]
+     |     +--ro session-id           uint32
+     |     +--ro transport            identityref
+     |     +--ro username             string
+     |     +--ro source-host?         inet:host
+     |     +--ro login-time           yang:date-and-time
+     |     +--ro in-rpcs?             yang:zero-based-counter32
+     |     +--ro in-bad-rpcs?         yang:zero-based-counter32
+     |     +--ro out-rpc-errors?      yang:zero-based-counter32
+     |     +--ro out-notifications?   yang:zero-based-counter32
+     +--ro statistics
+        +--ro netconf-start-time?   yang:date-and-time
+        +--ro in-bad-hellos?        yang:zero-based-counter32
+        +--ro in-sessions?          yang:zero-based-counter32
+        +--ro dropped-sessions?     yang:zero-based-counter32
+        +--ro in-rpcs?              yang:zero-based-counter32
+        +--ro in-bad-rpcs?          yang:zero-based-counter32
+        +--ro out-rpc-errors?       yang:zero-based-counter32
+        +--ro out-notifications?    yang:zero-based-counter32
+
+  rpcs:
+    +---x get-schema
+       +---w input
+       |  +---w identifier    string
+       |  +---w version?      string
+       |  +---w format?       identityref
+       +--ro output
+          +--ro data?   <anyxml>
+
+module: ietf-netconf-server
+  +--rw netconf-server
+     +--rw session-options
+     |  +--rw hello-timeout?   uint16
+     +--rw listen {listen}?
+     |  +--rw max-sessions?   uint16
+     |  +--rw idle-timeout?   uint16
+     |  +--rw endpoint* [name]
+     |     +--rw name         string
+     |     +--rw (transport)
+     |        +--:(ssh) {ssh-listen}?
+     |        |  +--rw ssh
+     |        |     +--rw address?            inet:ip-address
+     |        |     +--rw port?               inet:port-number
+     |        |     +--rw host-keys
+     |        |     |  +--rw host-key* [name]
+     |        |     |     +--rw name                 string
+     |        |     |     +--rw (host-key-type)
+     |        |     |        +--:(public-key)
+     |        |     |        |  +--rw public-key?    -> /ks:keystore/private-keys/private-key/name
+     |        |     |        +--:(certificate)
+     |        |     |           +--rw certificate?   -> /ks:keystore/private-keys/private-key/certificate-chains/certificate-chain/name {ssh-x509-certs}?
+     |        |     +--rw client-cert-auth {ssh-x509-certs}?
+     |        |        +--rw trusted-ca-certs?       -> /ks:keystore/trusted-certificates/name
+     |        |        +--rw trusted-client-certs?   -> /ks:keystore/trusted-certificates/name
+     |        +--:(tls) {tls-listen}?
+     |           +--rw tls
+     |              +--rw address?        inet:ip-address
+     |              +--rw port?           inet:port-number
+     |              +--rw certificates
+     |              |  +--rw certificate* [name]
+     |              |     +--rw name    -> /ks:keystore/private-keys/private-key/certificate-chains/certificate-chain/name
+     |              +--rw client-auth
+     |                 +--rw trusted-ca-certs?       -> /ks:keystore/trusted-certificates/name
+     |                 +--rw trusted-client-certs?   -> /ks:keystore/trusted-certificates/name
+     |                 +--rw cert-maps
+     |                    +--rw cert-to-name* [id]
+     |                       +--rw id             uint32
+     |                       +--rw fingerprint    x509c2n:tls-fingerprint
+     |                       +--rw map-type       identityref
+     |                       +--rw name           string
+     +--rw call-home {call-home}?
+        +--rw netconf-client* [name]
+           +--rw name                  string
+           +--rw (transport)
+           |  +--:(ssh) {ssh-call-home}?
+           |  |  +--rw ssh
+           |  |     +--rw endpoints
+           |  |     |  +--rw endpoint* [name]
+           |  |     |     +--rw name       string
+           |  |     |     +--rw address    inet:host
+           |  |     |     +--rw port?      inet:port-number
+           |  |     +--rw host-keys
+           |  |     |  +--rw host-key* [name]
+           |  |     |     +--rw name                 string
+           |  |     |     +--rw (host-key-type)
+           |  |     |        +--:(public-key)
+           |  |     |        |  +--rw public-key?    -> /ks:keystore/private-keys/private-key/name
+           |  |     |        +--:(certificate)
+           |  |     |           +--rw certificate?   -> /ks:keystore/private-keys/private-key/certificate-chains/certificate-chain/name {ssh-x509-certs}?
+           |  |     +--rw client-cert-auth {ssh-x509-certs}?
+           |  |        +--rw trusted-ca-certs?       -> /ks:keystore/trusted-certificates/name
+           |  |        +--rw trusted-client-certs?   -> /ks:keystore/trusted-certificates/name
+           |  +--:(tls) {tls-call-home}?
+           |     +--rw tls
+           |        +--rw endpoints
+           |        |  +--rw endpoint* [name]
+           |        |     +--rw name       string
+           |        |     +--rw address    inet:host
+           |        |     +--rw port?      inet:port-number
+           |        +--rw certificates
+           |        |  +--rw certificate* [name]
+           |        |     +--rw name    -> /ks:keystore/private-keys/private-key/certificate-chains/certificate-chain/name
+           |        +--rw client-auth
+           |           +--rw trusted-ca-certs?       -> /ks:keystore/trusted-certificates/name
+           |           +--rw trusted-client-certs?   -> /ks:keystore/trusted-certificates/name
+           |           +--rw cert-maps
+           |              +--rw cert-to-name* [id]
+           |                 +--rw id             uint32
+           |                 +--rw fingerprint    x509c2n:tls-fingerprint
+           |                 +--rw map-type       identityref
+           |                 +--rw name           string
+           +--rw connection-type
+           |  +--rw (connection-type)?
+           |     +--:(persistent-connection)
+           |     |  +--rw persistent!
+           |     |     +--rw idle-timeout?   uint32
+           |     |     +--rw keep-alives
+           |     |        +--rw max-wait?       uint16
+           |     |        +--rw max-attempts?   uint8
+           |     +--:(periodic-connection)
+           |        +--rw periodic!
+           |           +--rw idle-timeout?        uint16
+           |           +--rw reconnect_timeout?   uint16
+           +--rw reconnect-strategy
+              +--rw start-with?     enumeration
+              +--rw max-attempts?   uint8
 
 module: ietf-netconf
 
@@ -736,7 +954,8 @@ module: ietf-netconf
     |  |  |     |  +---w running?     empty
     |  |  |     +--:(startup)
     |  |  |        +---w startup?     empty {startup}?
-    |  |  +---w filter?   <anyxml>
+    |  |  +---w filter?               <anyxml>
+    |  |  +---w ncwd:with-defaults?   with-defaults-mode
     |  +--ro output
     |     +--ro data?   <anyxml>
     +---x edit-config
@@ -768,17 +987,18 @@ module: ietf-netconf
     |     |     +--:(url)
     |     |        +---w url?         inet:uri {url}?
     |     +---w source
-    |        +---w (config-source)
-    |           +--:(candidate)
-    |           |  +---w candidate?   empty {candidate}?
-    |           +--:(running)
-    |           |  +---w running?     empty
-    |           +--:(startup)
-    |           |  +---w startup?     empty {startup}?
-    |           +--:(url)
-    |           |  +---w url?         inet:uri {url}?
-    |           +--:(config)
-    |              +---w config?      <anyxml>
+    |     |  +---w (config-source)
+    |     |     +--:(candidate)
+    |     |     |  +---w candidate?   empty {candidate}?
+    |     |     +--:(running)
+    |     |     |  +---w running?     empty
+    |     |     +--:(startup)
+    |     |     |  +---w startup?     empty {startup}?
+    |     |     +--:(url)
+    |     |     |  +---w url?         inet:uri {url}?
+    |     |     +--:(config)
+    |     |        +---w config?      <anyxml>
+    |     +---w ncwd:with-defaults?   with-defaults-mode
     +---x delete-config
     |  +---w input
     |     +---w target
@@ -809,7 +1029,8 @@ module: ietf-netconf
     |              +---w startup?     empty {startup}?
     +---x get
     |  +---w input
-    |  |  +---w filter?   <anyxml>
+    |  |  +---w filter?               <anyxml>
+    |  |  +---w ncwd:with-defaults?   with-defaults-mode
     |  +--ro output
     |     +--ro data?   <anyxml>
     +---x close-session
@@ -840,6 +1061,167 @@ module: ietf-netconf
                 |  +---w url?         inet:uri {url}?
                 +--:(config)
                    +---w config?      <anyxml>
+
+module: ietf-ptp
+  +--rw ptp
+     +--rw instance-list* [instance-number]
+     |  +--rw instance-number       uint32
+     |  +--rw default-ds
+     |  |  +--ro two-step-flag?    boolean
+     |  |  +--ro clock-identity?   clock-identity-type
+     |  |  +--ro number-ports?     uint16
+     |  |  +--rw clock-quality
+     |  |  |  +--ro clock-class?                  uint8
+     |  |  |  +--rw clock-accuracy?               uint8
+     |  |  |  +--ro offset-scaled-log-variance?   uint16
+     |  |  +--rw priority1?        uint8
+     |  |  +--rw priority2?        uint8
+     |  |  +--rw domain-number?    uint8
+     |  |  +--ro slave-only?       boolean
+     |  +--ro current-ds
+     |  |  +--ro steps-removed?        uint16
+     |  |  +--ro offset-from-master?   time-interval-type
+     |  |  +--ro mean-path-delay?      time-interval-type
+     |  +--rw parent-ds
+     |  |  +--ro parent-port-identity
+     |  |  |  +--ro clock-identity?   clock-identity-type
+     |  |  |  +--ro port-number?      uint16
+     |  |  +--ro parent-stats?                                 boolean
+     |  |  +--ro observed-parent-offset-scaled-log-variance?   uint16
+     |  |  +--ro observed-parent-clock-phase-change-rate?      int32
+     |  |  +--ro grandmaster-identity?                         clock-identity-type
+     |  |  +--rw grandmaster-clock-quality
+     |  |  |  +--ro clock-class?                  uint8
+     |  |  |  +--rw clock-accuracy?               uint8
+     |  |  |  +--ro offset-scaled-log-variance?   uint16
+     |  |  +--rw grandmaster-priority1?                        uint8
+     |  |  +--rw grandmaster-priority2?                        uint8
+     |  +--rw time-properties-ds
+     |  |  +--rw current-utc-offset-valid?   boolean
+     |  |  +--rw current-utc-offset?         int16
+     |  |  +--rw leap59?                     boolean
+     |  |  +--rw leap61?                     boolean
+     |  |  +--ro time-traceable?             boolean
+     |  |  +--ro frequency-traceable?        boolean
+     |  |  +--ro ptp-timescale?              boolean
+     |  |  +--ro time-source?                uint8
+     |  +--ro port-ds-list* [port-number]
+     |     +--ro port-number                    uint16
+     |     +--ro port-state?                    port-state-enumeration
+     |     +--ro underlying-interface?          if:interface-ref
+     |     +--ro log-min-delay-req-interval?    int8
+     |     +--ro peer-mean-path-delay?          time-interval-type
+     |     +--ro log-announce-interval?         int8
+     |     +--ro announce-receipt-timeout?      uint8
+     |     +--ro log-sync-interval?             int8
+     |     +--ro delay-mechanism?               delay-mechanism-enumeration
+     |     +--ro log-min-pdelay-req-interval?   int8
+     |     +--ro version-number?                uint8
+     +--ro transparent-clock-default-ds
+     |  +--ro clock-identity?    clock-identity-type
+     |  +--ro number-ports?      uint16
+     |  +--ro delay-mechanism?   delay-mechanism-enumeration
+     |  +--ro primary-domain?    uint8
+     +--ro transparent-clock-port-ds-list* [port-number]
+        +--ro port-number                    uint16
+        +--ro log-min-pdelay-req-interval?   int8
+        +--ro faulty-flag?                   boolean
+        +--ro peer-mean-path-delay?          time-interval-type
+
+module: ietf-routing
+  +--rw routing
+  |  +--rw router-id?                 yang:dotted-quad {router-id}?
+  |  +--ro interfaces
+  |  |  +--ro interface*   if:interface-ref
+  |  +--rw control-plane-protocols
+  |  |  +--rw control-plane-protocol* [type name]
+  |  |     +--rw type             identityref
+  |  |     +--rw name             string
+  |  |     +--rw description?     string
+  |  |     +--rw static-routes
+  |  +--rw ribs
+  |     +--rw rib* [name]
+  |        +--rw name              string
+  |        +--rw address-family    identityref
+  |        +--ro default-rib?      boolean {multiple-ribs}?
+  |        +--ro routes
+  |        |  +--ro route* []
+  |        |     +--ro route-preference?   route-preference
+  |        |     +--ro next-hop
+  |        |     |  +--ro (next-hop-options)
+  |        |     |     +--:(simple-next-hop)
+  |        |     |     |  +--ro outgoing-interface?   if:interface-ref
+  |        |     |     +--:(special-next-hop)
+  |        |     |     |  +--ro special-next-hop?     enumeration
+  |        |     |     +--:(next-hop-list)
+  |        |     |        +--ro next-hop-list
+  |        |     |           +--ro next-hop* []
+  |        |     |              +--ro outgoing-interface?   if:interface-ref
+  |        |     +--ro source-protocol     identityref
+  |        |     +--ro active?             empty
+  |        |     +--ro last-updated?       yang:date-and-time
+  |        +---x active-route
+  |        |  +--ro output
+  |        |     +--ro route
+  |        |        +--ro next-hop
+  |        |        |  +--ro (next-hop-options)
+  |        |        |     +--:(simple-next-hop)
+  |        |        |     |  +--ro outgoing-interface?   if:interface-ref
+  |        |        |     +--:(special-next-hop)
+  |        |        |     |  +--ro special-next-hop?     enumeration
+  |        |        |     +--:(next-hop-list)
+  |        |        |        +--ro next-hop-list
+  |        |        |           +--ro next-hop* []
+  |        |        |              +--ro outgoing-interface?   if:interface-ref
+  |        |        +--ro source-protocol    identityref
+  |        |        +--ro active?            empty
+  |        |        +--ro last-updated?      yang:date-and-time
+  |        +--rw description?      string
+  o--ro routing-state
+     +--ro router-id?                 yang:dotted-quad
+     o--ro interfaces
+     |  o--ro interface*   if:interface-state-ref
+     o--ro control-plane-protocols
+     |  o--ro control-plane-protocol* [type name]
+     |     o--ro type    identityref
+     |     o--ro name    string
+     o--ro ribs
+        o--ro rib* [name]
+           o--ro name              string
+           +--ro address-family    identityref
+           o--ro default-rib?      boolean {multiple-ribs}?
+           o--ro routes
+           |  o--ro route* []
+           |     o--ro route-preference?   route-preference
+           |     o--ro next-hop
+           |     |  +--ro (next-hop-options)
+           |     |     +--:(simple-next-hop)
+           |     |     |  +--ro outgoing-interface?   if:interface-ref
+           |     |     +--:(special-next-hop)
+           |     |     |  +--ro special-next-hop?     enumeration
+           |     |     +--:(next-hop-list)
+           |     |        +--ro next-hop-list
+           |     |           +--ro next-hop* []
+           |     |              +--ro outgoing-interface?   if:interface-ref
+           |     +--ro source-protocol     identityref
+           |     +--ro active?             empty
+           |     +--ro last-updated?       yang:date-and-time
+           o---x active-route
+              +--ro output
+                 o--ro route
+                    o--ro next-hop
+                    |  +--ro (next-hop-options)
+                    |     +--:(simple-next-hop)
+                    |     |  +--ro outgoing-interface?   if:interface-ref
+                    |     +--:(special-next-hop)
+                    |     |  +--ro special-next-hop?     enumeration
+                    |     +--:(next-hop-list)
+                    |        +--ro next-hop-list
+                    |           +--ro next-hop* []
+                    |              +--ro outgoing-interface?   if:interface-ref
+                    +--ro source-protocol    identityref
+                    +--ro active?            empty
+                    +--ro last-updated?      yang:date-and-time
 
 module: ietf-system
   +--rw system
@@ -914,3 +1296,144 @@ module: ietf-system
     |     +---w current-datetime    yang:date-and-time
     +---x system-restart
     +---x system-shutdown
+
+module: ietf-yang-library
+  +--ro yang-library
+  |  +--ro module-set* [name]
+  |  |  +--ro name                  string
+  |  |  +--ro checksum              string
+  |  |  +--ro module* [name]
+  |  |  |  +--ro name         yang:yang-identifier
+  |  |  |  +--ro revision?    revision-identifier
+  |  |  |  +--ro namespace    inet:uri
+  |  |  |  +--ro location*    inet:uri
+  |  |  |  +--ro submodule* [name]
+  |  |  |  |  +--ro name        yang:yang-identifier
+  |  |  |  |  +--ro revision?   revision-identifier
+  |  |  |  |  +--ro location*   inet:uri
+  |  |  |  +--ro feature* [name]
+  |  |  |  |  +--ro name    yang:yang-identifier
+  |  |  |  +--ro deviation* [module]
+  |  |  |     +--ro module    -> ../../../module/name
+  |  |  +--ro import-only-module* [name revision]
+  |  |     +--ro name         yang:yang-identifier
+  |  |     +--ro revision     union
+  |  |     +--ro namespace    inet:uri
+  |  |     +--ro location*    inet:uri
+  |  |     +--ro submodule* [name]
+  |  |        +--ro name        yang:yang-identifier
+  |  |        +--ro revision?   revision-identifier
+  |  |        +--ro location*   inet:uri
+  |  +--ro schema* [name]
+  |  |  +--ro name          string
+  |  |  +--ro checksum      string
+  |  |  +--ro module-set*   -> ../../module-set/name
+  |  +--ro datastore* [name]
+  |  |  +--ro name      identityref
+  |  |  +--ro schema    -> ../../schema/name
+  |  +--ro checksum      string
+  x--ro modules-state
+     x--ro module-set-id    string
+     x--ro module* [name revision]
+        x--ro name                yang:yang-identifier
+        x--ro revision            union
+        x--ro schema?             inet:uri
+        x--ro namespace           inet:uri
+        x--ro feature*            yang:yang-identifier
+        x--ro deviation* [name revision]
+        |  x--ro name        yang:yang-identifier
+        |  x--ro revision    union
+        x--ro conformance-type    enumeration
+        x--ro submodule* [name revision]
+           x--ro name        yang:yang-identifier
+           x--ro revision    union
+           x--ro schema?     inet:uri
+
+module: nc-notifications
+  +--ro netconf
+     +--ro streams
+        +--ro stream* [name]
+           +--ro name                     ncEvent:streamNameType
+           +--ro description              string
+           +--ro replaySupport            boolean
+           +--ro replayLogCreationTime?   yang:date-and-time
+
+module: notifications
+  +--ro notification
+     +--ro eventTime    yang:date-and-time
+
+  rpcs:
+    +---x create-subscription
+       +---w input
+          +---w stream?      streamNameType
+          +---w filter?      <anyxml>
+          +---w startTime?   yang:date-and-time
+          +---w stopTime?    yang:date-and-time
+
+module: sysrepo-module-dependencies
+  +--rw module_* [name revision]
+     +--rw name                    string
+     +--rw revision                string
+     +--rw prefix?                 string
+     +--rw namespace?              string
+     +--rw filepath?               string
+     +--rw latest-revision?        boolean
+     +--rw submodule?              boolean
+     +--rw installed?              boolean
+     +--rw implemented?            boolean
+     +--rw has-data?               boolean
+     +--rw has-persist?            boolean
+     +--rw dependencies
+     |  +--rw dependency* [module-name module-revision type]
+     |     +--rw module-name        string
+     |     +--rw module-revision    string
+     |     +--rw type               enumeration
+     |     +--rw orig-modules
+     |        +--rw orig-module* [orig-module-name orig-module-revision]
+     |           +--rw orig-module-name        string
+     |           +--rw orig-module-revision    string
+     +--rw instance-identifiers
+     |  +--rw instance-identifier* [xpath orig-module-revision]
+     |     +--rw xpath                   string
+     |     +--rw orig-module-name        string
+     |     +--rw orig-module-revision    string
+     +--rw op-data-subtrees
+        +--rw op-data-subtree* [xpath orig-module-revision]
+           +--rw xpath                   string
+           +--rw orig-module-name        string
+           +--rw orig-module-revision    string
+
+module: sysrepo-module-versions
+  +--ro sysrepo-module-versions
+     +--ro module* [name]
+        +--ro name                string
+        +--ro revision?           string
+        +--ro source?             enumeration
+        +--ro commit_id?          string
+        +--ro internal_version?   string
+        +--ro developer_change*   string
+
+module: sysrepo-notification-store
+  +--rw notifications
+     +--rw notification* [xpath generated-time logged-time]
+        +--rw xpath             string
+        +--rw generated-time    yang:date-and-time
+        +--rw logged-time       yang:timestamp
+
+module: sysrepo-persistent-data
+  +--rw module* [name]
+     +--rw name                string
+     +--rw enabled-features
+     |  +--rw feature-name*   string
+     +--rw subscriptions
+        +--rw subscription* [type destination-address destination-id]
+           +--rw type                   identityref
+           +--rw destination-address    string
+           +--rw destination-id         uint32
+           +--rw xpath?                 string
+           +--rw username?              string
+           +--rw event?                 identityref
+           +--rw priority?              uint32
+           +--rw enable-running?        empty
+           +--rw enable-nacm?           empty
+           +--rw api-variant?           enumeration

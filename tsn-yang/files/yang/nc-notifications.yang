@@ -79,17 +79,4 @@ module nc-notifications {
       }
     }
 
-    notification replayComplete {
-      description
-        "This notification is sent to signal the end of a replay
-         portion of a subscription.";
-    }
-
-    notification notificationComplete {
-      description
-        "This notification is sent to signal the end of a notification
-         subscription. It is sent in the case that stopTime was
-         specified during the creation of the subscription..";
-    }
-
 }

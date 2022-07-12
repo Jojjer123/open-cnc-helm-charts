@@ -1133,9 +1133,7 @@ module ieee802-dot1ab-lldp {
              agent.";
         
           leaf info-identifier {
-            type binary {
-              length "3";
-            }
+            type uint32;
             description   
               "The Organizationally Unique Identifier (OUI), as defined
                in IEEE std 802-2001, is a 24 bit (three octets) globally
@@ -1201,90 +1199,4 @@ module ieee802-dot1ab-lldp {
   }
   
 
-  notification remote-table-change {
-
-    leaf remote-insert {
-      type leafref {
-        path "/lldp:lldp/lldp:remote-statistics/lldp:remote-inserts";
-      }
-      description   
-        "The number of times the complete set of information
-         advertised by a particular MSAP has been inserted into tables
-         contained in remote-systems-data and lldpExtensions objects.
-
-         The complete set of information received from a particular
-         MSAP should be inserted into related tables. If partial
-         information cannot be inserted for a reason such as lack
-         of resources, all of the complete set of information should
-         be removed.
-
-         This counter should be incremented only once after the
-         complete set of information is successfully recorded
-         in all related tables.  Any failures during inserting
-         information set which result in deletion of previously
-         inserted information should not trigger any changes in
-         inserts since the insert is not completed
-         yet or or in deletes, since the deletion
-         would only be a partial deletion. If the failure was the
-         result of lack of resources, the drops
-         counter should be incremented once.";
-    }
-
-    leaf remote-delete {
-      type leafref {
-        path "/lldp:lldp/lldp:remote-statistics/lldp:remote-deletes";
-      }
-      description   
-       "The number of times the complete set of information
-        advertised by a particular MSAP has been deleted from
-        tables contained in remote-systems-data and lldpExtensions
-        objects.
-
-        This counter should be incremented only once when the
-        complete set of information is completely deleted from all
-        related tables.  Partial deletions, such as deletion of
-        rows associated with a particular MSAP from some tables,
-        but not from all tables are not allowed, thus should not
-        change the value of this counter.";
-    }
-
-    leaf remote-drops {
-      type leafref {
-        path "/lldp:lldp/lldp:remote-statistics/lldp:remote-drops";
-      }
-      description   
-        "The number of times the complete set of information
-         advertised by a particular MSAP could not be entered into
-         tables contained in remote-systems-data and lldpExtensions
-         objects because of insufficient resources.";
-    }
-
-    leaf remote-ageouts {
-      type leafref {
-        path "/lldp:lldp/lldp:remote-statistics/lldp:remote-ageouts";
-      }
-      description
-        "The number of times the complete set of information
-         advertised by a particular MSAP has been deleted from tables
-         contained in remote-systems-data and lldpExtensions objects
-         because the information timeliness interval has expired.
-
-         This counter should be incremented only once when the complete
-         set of information is completely invalidated (aged out)
-         from all related tables.  Partial aging, similar to deletion
-         case, is not allowed, and thus, should not change the value
-         of this counter.";
-    }
-
-    description   
-      "A rem-table-change notification is sent when the value
-       of remote-table-last-change-time changes.  It can be
-       utilized by an NMS to trigger LLDP remote systems table
-       maintenance polls.
-
-       Note that transmission of remote-table-change
-       notifications are throttled by the agent, as specified by the
-      'notification-interval' object.";
-
-  }
 } /* end of module ieee802-dot1ab-lldp */
