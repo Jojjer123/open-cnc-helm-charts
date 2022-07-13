@@ -1,13 +1,13 @@
 apiVersion: config.onosproject.org/v1beta1
 kind: Model
 metadata:
-  name: {{ template "tsn-yang.fullname" . }}
+  name: {{ template "tsn-model.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "tsn-yang.labels" . | nindent 4 }}
+    {{- include "tsn-model.labels" . | nindent 4 }}
 spec:
   plugin:
-    type: tsn-yang
+    type: tsn-model
     version: {{ .Chart.AppVersion | quote }}
   modules:
   - name: ieee802-dot1ab-lldp

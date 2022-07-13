@@ -28,10 +28,10 @@ dependencies:
   #   condition: import.onos-config.enabled
   #   repository: https://charts.onosproject.org
   #   version: 1.5.5
-  - name: tsn-yang
-    condition: import.tsn-yang.enabled
-    repository: file://../tsn-yang
-    version: 1.0.0
+  - name: tsn-model
+    condition: import.tsn-model.enabled
+    repository: file://../tsn-model
+    version: 1.0.5
   - name: onos-topo
     condition: import.onos-topo.enabled
     repository: file://../onos-topo
