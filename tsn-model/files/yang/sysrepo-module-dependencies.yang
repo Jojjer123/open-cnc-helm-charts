@@ -24,7 +24,7 @@ module sysrepo-module-dependencies {
     reference "sysrepo.org";
   }
 
-  list module_ {
+  list module {
     key "name revision";
     description "Module dependencies maintained by sysrepo.";
 

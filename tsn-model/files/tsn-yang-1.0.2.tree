@@ -1,64 +1,3 @@
-module: ieee8021-mstp
-  +--rw ieee8021-mstp
-     +--rw ieee8021MstpCistTable
-     |  +--rw ieee8021MstpCistEntry* [ieee8021MstpCistComponentId]
-     |     +--rw ieee8021MstpCistComponentId               IEEE8021PbbComponentIdentifier
-     |     +--ro ieee8021MstpCistBridgeIdentifier?         BridgeId
-     |     +--ro ieee8021MstpCistTopologyChange?           boolean
-     |     +--ro ieee8021MstpCistRegionalRootIdentifier?   BridgeId
-     |     +--ro ieee8021MstpCistPathCost?                 uint32
-     |     +--rw ieee8021MstpCistMaxHops?                  int32
-     |     +--ro ieee8021MstpCistBridgePriority?           int32
-     +--rw ieee8021MstpTable
-     |  +--rw ieee8021MstpEntry* [ieee8021MstpComponentId ieee8021MstpId]
-     |     +--rw ieee8021MstpComponentId                IEEE8021PbbComponentIdentifier
-     |     +--rw ieee8021MstpId                         IEEE8021MstIdentifier
-     |     +--ro ieee8021MstpBridgeId?                  BridgeId
-     |     +--ro ieee8021MstpTimeSinceTopologyChange?   yang:timeticks
-     |     +--ro ieee8021MstpTopologyChanges?           yang:counter64
-     |     +--ro ieee8021MstpDesignatedRoot?            BridgeId
-     |     +--ro ieee8021MstpRootPathCost?              int32
-     |     +--ro ieee8021MstpRootPort?                  IEEE8021BridgePortNumber
-     |     +--rw ieee8021MstpBridgePriority?            int32
-     +--rw ieee8021MstpCistPortTable
-     |  +--rw ieee8021MstpCistPortEntry* [ieee8021MstpCistPortComponentId ieee8021MstpCistPortNum]
-     |     +--rw ieee8021MstpCistPortComponentId           IEEE8021PbbComponentIdentifier
-     |     +--rw ieee8021MstpCistPortNum                   IEEE8021BridgePortNumber
-     |     +--rw ieee8021MstpCistPortAdminPathCost?        int32
-     |     +--ro ieee8021MstpCistPortDesignatedRoot?       BridgeId
-     |     +--ro ieee8021MstpCistPortTopologyChangeAck?    boolean
-     |     +--ro ieee8021MstpCistPortHelloTime?            int32
-     |     +--rw ieee8021MstpCistPortAdminEdgePort?        boolean
-     |     +--ro ieee8021MstpCistPortOperEdgePort?         boolean
-     |     +--rw ieee8021MstpCistPortMacEnabled?           boolean
-     |     +--rw ieee8021MstpCistPortRestrictedRole?       boolean
-     |     +--rw ieee8021MstpCistPortRestrictedTcn?        boolean
-     |     +--ro ieee8021MstpCistPortRole?                 enumeration
-     |     +--ro ieee8021MstpCistPortDisputed?             boolean
-     |     +--ro ieee8021MstpCistPortCistRegionalRootId?   BridgeId
-     |     +--ro ieee8021MstpCistPortCistPathCost?         uint32
-     +--rw ieee8021MstpPortTable
-     |  +--rw ieee8021MstpPortEntry* [ieee8021MstpPortComponentId ieee8021MstpPortMstId ieee8021MstpPortNum]
-     |     +--rw ieee8021MstpPortComponentId         IEEE8021PbbComponentIdentifier
-     |     +--rw ieee8021MstpPortMstId               IEEE8021MstIdentifier
-     |     +--rw ieee8021MstpPortNum                 IEEE8021BridgePortNumber
-     |     +--ro ieee8021MstpPortState?              enumeration
-     |     +--rw ieee8021MstpPortPriority?           int32
-     |     +--rw ieee8021MstpPortPathCost?           int32
-     |     +--ro ieee8021MstpPortDesignatedRoot?     BridgeId
-     |     +--ro ieee8021MstpPortDesignatedCost?     int32
-     |     +--ro ieee8021MstpPortDesignatedBridge?   BridgeId
-     |     +--ro ieee8021MstpPortDesignatedPort?     IEEE8021BridgePortNumber
-     |     +--ro ieee8021MstpPortRole?               enumeration
-     |     +--ro ieee8021MstpPortDisputed?           boolean
-     +--rw ieee8021MstpConfigIdTable
-        +--rw ieee8021MstpConfigIdEntry* [ieee8021MstpConfigIdComponentId]
-           +--rw ieee8021MstpConfigIdComponentId       IEEE8021PbbComponentIdentifier
-           +--rw ieee8021MstpConfigIdFormatSelector?   int32
-           +--rw ieee8021MstpConfigurationName?        SnmpAdminString
-           +--rw ieee8021MstpRevisionLevel?            uint32
-           +--rw ieee8021MstpConfigurationDigest?      binary
-
 module: ieee802-dot1ab-lldp
   +--rw lldp
      +--rw bridge?                       bridge-ref
@@ -399,6 +338,67 @@ module: ieee802-dot1q-fqtss
            +--rw ieee8021FqtssPriorityRegenOverride?   uint32
            +--ro ieee8021FqtssSrpBoundaryPort?         boolean
 
+module: ieee8021-mstp
+  +--rw ieee8021-mstp
+     +--rw ieee8021MstpCistTable
+     |  +--rw ieee8021MstpCistEntry* [ieee8021MstpCistComponentId]
+     |     +--rw ieee8021MstpCistComponentId               IEEE8021PbbComponentIdentifier
+     |     +--ro ieee8021MstpCistBridgeIdentifier?         BridgeId
+     |     +--ro ieee8021MstpCistTopologyChange?           boolean
+     |     +--ro ieee8021MstpCistRegionalRootIdentifier?   BridgeId
+     |     +--ro ieee8021MstpCistPathCost?                 uint32
+     |     +--rw ieee8021MstpCistMaxHops?                  int32
+     |     +--ro ieee8021MstpCistBridgePriority?           int32
+     +--rw ieee8021MstpTable
+     |  +--rw ieee8021MstpEntry* [ieee8021MstpComponentId ieee8021MstpId]
+     |     +--rw ieee8021MstpComponentId                IEEE8021PbbComponentIdentifier
+     |     +--rw ieee8021MstpId                         IEEE8021MstIdentifier
+     |     +--ro ieee8021MstpBridgeId?                  BridgeId
+     |     +--ro ieee8021MstpTimeSinceTopologyChange?   yang:timeticks
+     |     +--ro ieee8021MstpTopologyChanges?           yang:counter64
+     |     +--ro ieee8021MstpDesignatedRoot?            BridgeId
+     |     +--ro ieee8021MstpRootPathCost?              int32
+     |     +--ro ieee8021MstpRootPort?                  IEEE8021BridgePortNumber
+     |     +--rw ieee8021MstpBridgePriority?            int32
+     +--rw ieee8021MstpCistPortTable
+     |  +--rw ieee8021MstpCistPortEntry* [ieee8021MstpCistPortComponentId ieee8021MstpCistPortNum]
+     |     +--rw ieee8021MstpCistPortComponentId           IEEE8021PbbComponentIdentifier
+     |     +--rw ieee8021MstpCistPortNum                   IEEE8021BridgePortNumber
+     |     +--rw ieee8021MstpCistPortAdminPathCost?        int32
+     |     +--ro ieee8021MstpCistPortDesignatedRoot?       BridgeId
+     |     +--ro ieee8021MstpCistPortTopologyChangeAck?    boolean
+     |     +--ro ieee8021MstpCistPortHelloTime?            int32
+     |     +--rw ieee8021MstpCistPortAdminEdgePort?        boolean
+     |     +--ro ieee8021MstpCistPortOperEdgePort?         boolean
+     |     +--rw ieee8021MstpCistPortMacEnabled?           boolean
+     |     +--rw ieee8021MstpCistPortRestrictedRole?       boolean
+     |     +--rw ieee8021MstpCistPortRestrictedTcn?        boolean
+     |     +--ro ieee8021MstpCistPortRole?                 enumeration
+     |     +--ro ieee8021MstpCistPortDisputed?             boolean
+     |     +--ro ieee8021MstpCistPortCistRegionalRootId?   BridgeId
+     |     +--ro ieee8021MstpCistPortCistPathCost?         uint32
+     +--rw ieee8021MstpPortTable
+     |  +--rw ieee8021MstpPortEntry* [ieee8021MstpPortComponentId ieee8021MstpPortMstId ieee8021MstpPortNum]
+     |     +--rw ieee8021MstpPortComponentId         IEEE8021PbbComponentIdentifier
+     |     +--rw ieee8021MstpPortMstId               IEEE8021MstIdentifier
+     |     +--rw ieee8021MstpPortNum                 IEEE8021BridgePortNumber
+     |     +--ro ieee8021MstpPortState?              enumeration
+     |     +--rw ieee8021MstpPortPriority?           int32
+     |     +--rw ieee8021MstpPortPathCost?           int32
+     |     +--ro ieee8021MstpPortDesignatedRoot?     BridgeId
+     |     +--ro ieee8021MstpPortDesignatedCost?     int32
+     |     +--ro ieee8021MstpPortDesignatedBridge?   BridgeId
+     |     +--ro ieee8021MstpPortDesignatedPort?     IEEE8021BridgePortNumber
+     |     +--ro ieee8021MstpPortRole?               enumeration
+     |     +--ro ieee8021MstpPortDisputed?           boolean
+     +--rw ieee8021MstpConfigIdTable
+        +--rw ieee8021MstpConfigIdEntry* [ieee8021MstpConfigIdComponentId]
+           +--rw ieee8021MstpConfigIdComponentId       IEEE8021PbbComponentIdentifier
+           +--rw ieee8021MstpConfigIdFormatSelector?   int32
+           +--rw ieee8021MstpConfigurationName?        SnmpAdminString
+           +--rw ieee8021MstpRevisionLevel?            uint32
+           +--rw ieee8021MstpConfigurationDigest?      binary
+
 module: ietf-interfaces
   +--rw interfaces
   |  +--rw interface* [name]
@@ -540,14 +540,6 @@ module: ietf-interfaces
   |     |  +--ro dot1CB:passed-packets?      yang:counter64
   |     |  +--ro dot1CB:discarded-packets?   yang:counter64
   |     |  +--ro dot1CB:errored-packets?     yang:counter64
-  |     +--rw preempt:frame-preemption-parameters {frame-preemption}?
-  |     |  +--rw preempt:frame-preemption-status-table* [traffic-class]
-  |     |  |  +--rw preempt:traffic-class              dot1q-types:traffic-class-type
-  |     |  |  +--rw preempt:frame-preemption-status?   enumeration
-  |     |  +--ro preempt:hold-advance?                    uint32
-  |     |  +--ro preempt:release-advance?                 uint32
-  |     |  +--ro preempt:preemption-active?               boolean
-  |     |  +--ro preempt:hold-request?                    enumeration
   |     +--rw preempt1:mac-merge {mac-merge}?
   |     |  +--rw preempt1:admin-control
   |     |  |  +--rw preempt1:merge-enable-tx?     enumeration
@@ -565,6 +557,14 @@ module: ietf-interfaces
   |     |     +--ro preempt1:fragment-count-rx?      yang:counter64
   |     |     +--ro preempt1:fragment-count-tx?      yang:counter64
   |     |     +--ro preempt1:hold-count?             yang:counter64
+  |     +--rw preempt:frame-preemption-parameters {frame-preemption}?
+  |     |  +--rw preempt:frame-preemption-status-table* [traffic-class]
+  |     |  |  +--rw preempt:traffic-class              dot1q-types:traffic-class-type
+  |     |  |  +--rw preempt:frame-preemption-status?   enumeration
+  |     |  +--ro preempt:hold-advance?                    uint32
+  |     |  +--ro preempt:release-advance?                 uint32
+  |     |  +--ro preempt:preemption-active?               boolean
+  |     |  +--ro preempt:hold-request?                    enumeration
   |     +--rw sched:max-sdu-table* [traffic-class] {scheduled-traffic}?
   |     |  +--rw sched:traffic-class           dot1q-types:traffic-class-type
   |     |  +--rw sched:queue-max-sdu?          uint32
@@ -1371,7 +1371,7 @@ module: notifications
           +---w stopTime?    yang:date-and-time
 
 module: sysrepo-module-dependencies
-  +--rw module_* [name revision]
+  +--rw module* [name revision]
      +--rw name                    string
      +--rw revision                string
      +--rw prefix?                 string
@@ -1421,7 +1421,7 @@ module: sysrepo-notification-store
         +--rw logged-time       yang:timestamp
 
 module: sysrepo-persistent-data
-  +--rw module* [name]
+  +--rw module_* [name]
      +--rw name                string
      +--rw enabled-features
      |  +--rw feature-name*   string

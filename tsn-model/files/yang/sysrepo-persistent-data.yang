@@ -82,7 +82,7 @@ module sysrepo-persistent-data {
     description "Occurs just after the changes have been committed to the datastore.";
   }
 
-  list module {
+  list module_ {
     key "name";
     description "Module-specific persistent data maintained by sysrepo.";
 

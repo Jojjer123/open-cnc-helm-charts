@@ -86,4 +86,5 @@ module ietf-netconf-notifications {
       } // choice server-or-user
     } // container changed-by-parms
   }
+
 }

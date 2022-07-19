@@ -1133,7 +1133,9 @@ module ieee802-dot1ab-lldp {
              agent.";
         
           leaf info-identifier {
-            type uint32;
+            type uint32 {
+              length "3";
+            }
             description   
               "The Organizationally Unique Identifier (OUI), as defined
                in IEEE std 802-2001, is a 24 bit (three octets) globally
@@ -1198,5 +1200,4 @@ module ieee802-dot1ab-lldp {
     }
   }
   
-
 } /* end of module ieee802-dot1ab-lldp */
