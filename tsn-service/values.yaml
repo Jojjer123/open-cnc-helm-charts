@@ -18,10 +18,6 @@ resources:
 service:
   type: ClusterIP
 
-ports:
-  grpc:
-    insecure: 5000
-
 nodeSelector: {}
 
 tolerations: []

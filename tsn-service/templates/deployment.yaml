@@ -61,7 +61,7 @@ spec:
                   fieldPath: spec.nodeName
           ports:
             - name: grpc
-              containerPort: 5000
+              containerPort: 5150
           volumeMounts:
             - name: config
               mountPath: /etc/onos/config
