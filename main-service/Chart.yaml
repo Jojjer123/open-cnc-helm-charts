@@ -5,7 +5,3 @@ type: application
 version: 0.0.1
 appVersion: v0.0.1
 description: Service managing TSN subsystem.
-home:
-maintainers:
-  - name: Fredrik Hallström
-    email:

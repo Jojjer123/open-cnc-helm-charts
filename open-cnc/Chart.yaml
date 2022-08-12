@@ -5,8 +5,6 @@ kubeVersion: ">=1.17.0"
 type: application
 version: 1.2.27
 appVersion: v1.1.0
-maintainers:
-  - name: Fredrik Hallström
 dependencies:
   - name: main-service
     condition: import.main-service.enabled
@@ -24,10 +22,6 @@ dependencies:
     condition: import.onos-config.enabled
     repository: file://../onos-config
     version: 1.5.5
-  # - name: onos-config
-  #   condition: import.onos-config.enabled
-  #   repository: https://charts.onosproject.org
-  #   version: 1.5.5
   - name: tsn-model
     condition: import.tsn-model.enabled
     repository: file://../tsn-model

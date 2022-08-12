@@ -43,8 +43,6 @@ import:
     enabled: true
   monitor-service:
     enabled: true
-  grpc-client:
-    enabled: true
   onos-config:
     enabled: true
   tsn-yang:
@@ -72,12 +70,6 @@ monitor-service:
     consensus:
       enabled: false
 
-# # GRPC-CLIENT
-# grpc-client:
-#   store:
-#     consensus:
-#       enabled: false
-
 # ONOS-CONFIG
 onos-config:
   store:
@@ -93,9 +85,3 @@ onos-topo:
   store:
     consensus:
       enabled: false
-
-# # GNMI-NETCONF-ADAPTER
-# gnmi-netconf-adapter:
-#   store:
-#     consensus:
-#       enabled: false

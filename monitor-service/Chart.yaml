@@ -8,6 +8,3 @@ description: Service providing monitoring of counters for switches in the networ
 keywords:
   - onos
   - sdn
-home:
-maintainers:
-  - name: Fredrik Hallström

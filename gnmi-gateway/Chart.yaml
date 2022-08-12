@@ -8,7 +8,3 @@ description: Manages gnmi subscriptions.
 keywords:
   - onos
   - sdn
-home: https://onosproject.org
-maintainers:
-  - name: Fredrik Hallström
-    email:
